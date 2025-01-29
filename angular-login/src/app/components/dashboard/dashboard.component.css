@@ -1,0 +1,118 @@
+/* .dashboard-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .student-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .student-table th,
+  .student-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .student-table th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .student-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+   */
+
+   .dashboard-container {
+    padding: 20px;
+    background-color: #1e293b; /* Dark background */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Slightly stronger shadow for dark theme */
+    color: #f1f5f9; /* Light text color for contrast */
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #f8fafc; /* Bright heading color */
+    text-align: center;
+  }
+  
+  .student-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .student-table th,
+  .student-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #334155; /* Darker border for subtle contrast */
+    color: #e2e8f0; /* Light text color */
+  }
+  
+  .student-table th {
+    background-color: #4caf50; /* Green for header cells */
+    color: white;
+  }
+  
+  .student-table tr:nth-child(even) {
+    background-color: #334155; /* Dark row background for alternate rows */
+  }
+  
+  .student-table tr:nth-child(odd) {
+    background-color: #1e293b; /* Default dark row background */
+  }
+  
+  .welcome-text {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 40px;
+    color: #f72020ad; /* Light blue to stand out */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Subtle text shadow */
+  }
+  
+  /* Optional: Add hover effect for rows */
+  .student-table tr:hover {
+    background-color: #475569; /* Highlighted row on hover */
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  
+
+  .logout-button {
+    display: block;
+    margin: 20px auto; /* Center the button */
+    padding: 10px 20px;
+    background-color: #f72020ad; /* Red color for logout button */
+    color: #fff; /* White text */
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Button shadow */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #d61e1e; /* Slightly darker red on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+  }
+  
+  .logout-button:active {
+    transform: scale(1); /* Reset scale on click */
+  }
+  

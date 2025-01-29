@@ -1,0 +1,94 @@
+<!-- <div class="min-h-screen flex items-center justify-center bg-gray-900">
+  <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+    <h1 class="text-3xl font-semibold text-gray-800 mb-6 text-center">
+      Login</h1>
+
+    <div class="flex flex-col space-y-6">
+      <input
+        type="email"
+        placeholder="Enter Email"
+        class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 placeholder-gray-500"
+      />
+      <input
+        type="password"
+        placeholder="Enter Password"
+        class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 placeholder-gray-500"
+      />
+      
+    <button
+    class="w-full bg-gray-600 text-white py-3 rounded-full hover:bg-gray-700 transition">
+    Login </button>
+  
+    </div>
+    <p class="mt-6 text-center text-gray-600">
+      Not Registered Yet? <a href="/sign-up" class="text-blue-600 font-semibold hover:text-blue-700">Sign Up</a>
+    </p>
+  </div>
+</div> -->
+
+<div
+  class="min-h-screen flex items-center justify-center bg-gray-900 flex flex-col"
+>
+  <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+    <h1 class="text-3xl font-semibold text-gray-800 mb-6 text-center">
+      Login
+    </h1>
+    <form (ngSubmit)="onLogin()" [formGroup]="loginForm">
+      <div class="space-y-6">
+        <!-- Email -->
+        <div>
+          <input
+            type="email"
+            placeholder="Enter Email"
+            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 placeholder-gray-500"
+            formControlName="email"
+          />
+          <p
+            class="text-red-500 text-sm mt-1"
+            *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.dirty"
+          >
+            {{ loginForm.get('email')?.hasError('required')
+              ? 'Email is required.'
+              : loginForm.get('email')?.hasError('email')
+              ? 'Invalid email address.'
+              : 'Email must end with @docquity.com.' }}
+          </p>
+        </div>
+ 
+        <!-- Password -->
+        <div>
+          <input
+            type="password"
+            placeholder="Password"
+            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 placeholder-gray-500"
+            
+            formControlName="password"
+          />
+          <p
+            class="text-red-500 text-sm mt-1"
+            *ngIf="
+              loginForm.get('password')?.invalid && loginForm.get('password')?.dirty
+            "
+          >
+            {{ loginForm.get('password')?.hasError('required')
+              ? 'Password is required.'
+              : 'Must include uppercase, lowercase, number, special character, and min 8 chars.' }}
+          </p>
+        </div>
+ 
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          
+          class="w-full bg-gray-600 text-white py-3 rounded-full hover:bg-gray-700 transition"
+          [disabled]="loginForm.invalid"
+        >
+          Login
+        </button>
+      </div>
+    </form>
+    <p class="text-center mt-4">
+      Not Registered Yet? <a href="/sign-up" class="text-blue-500">Register</a>
+    </p>
+  </div>
+</div>

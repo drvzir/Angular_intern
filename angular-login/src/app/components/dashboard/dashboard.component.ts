@@ -49,16 +49,23 @@ export class DashboardComponent implements OnInit {
       );
   }
 // yeh logout ka function hai
+
+  // logout(): void {
+  //   localStorage.removeItem('access_token'); // Clear access token
+  //   console.log('Logged out and token removed');
+  //   this.router.navigate(['/login']).then(success => {
+  //     if (success) {
+  //       console.log('Navigated back to login');
+  //     } else {
+  //       console.error('Navigation to login failed');
+  //     }
+  //   });
+  // }
   logout(): void {
-    localStorage.removeItem('access_token'); // Clear access token
+    localStorage.removeItem('access_token'); // this is done for testing ,, otherwise upper code is for checking logged in or navigated back to login
     console.log('Logged out and token removed');
-    this.router.navigate(['/login']).then(success => {
-      if (success) {
-        console.log('Navigated back to login');
-      } else {
-        console.error('Navigation to login failed');
-      }
-    });
-  }//yaha pe
+    this.router.navigate(['/login']);
+  }
+  
 
 }

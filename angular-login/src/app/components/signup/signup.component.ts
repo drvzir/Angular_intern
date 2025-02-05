@@ -106,7 +106,7 @@ export class SignupComponent {
       // });
       this.http.post("http://localhost:3000/auth/signup", formData).subscribe(
         (res) => {
-          console.log('Signup Successful', res);
+          console.log('Signup Successful',res);
           // Clear errors on email if no conflicts
           alert('Signup successful');
           this.router.navigate(['/login'])
@@ -117,13 +117,18 @@ export class SignupComponent {
           if (error.status === 409 && error.error.field === 'email') {
             this.userForm.get('email')?.setErrors({ emailExists: true });
           }
+          //server error
+          else {
+            this.serverError = 'An unexpected error occurred. Please try again later.';
+          }
         }
       );
 
 
-    } else {
-      console.log('Form is invalid');
     }
+    // else {
+    //   console.log('Form is invalid');
+    // }
   }
 }
  

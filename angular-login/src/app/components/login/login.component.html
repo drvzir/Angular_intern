@@ -23,7 +23,10 @@
               ? 'Email is required.'
               : loginForm.get('email')?.hasError('email')
               ? 'Invalid email address.'
-              : 'Email must end with @docquity.com.' }}
+              : loginForm.get('email')?.hasError('emailExists') 
+              ? 'Email not found in the database.'
+              : 'Email must end with @docquity.com.' 
+            }}
           </p>
         </div>
  

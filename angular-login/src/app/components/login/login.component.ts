@@ -76,6 +76,7 @@ import { Router } from '@angular/router';
   imports: [ReactiveFormsModule, NgIf],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  standalone : true,// this one  1:05pm
 })
 export class LoginComponent {
   constructor(private http : HttpClient, private router : Router){}
@@ -117,6 +118,7 @@ export class LoginComponent {
             console.log('Token Stored in the Local Storage')
           }
           console.log('Login Successful', res);
+          alert('Login Successful');
           // this.loginForm.get('email')?.setErrors(null);
           this.router.navigate(['/dashboard']).then(success => {
             if (success) {
@@ -130,9 +132,16 @@ export class LoginComponent {
           if (error.status === 409 && error.error.field === 'email') {
             this.loginForm.get('email')?.setErrors({ emailExists: true });
           }
+
+        else if(error.status === 404){
+         this.loginForm.get('email')?.setErrors({ emailNotFound: true });
+         alert('Email Not Found');
+        }
+
         }
       );
-    } else {
+    } 
+    else {
       console.log('Form is invalid');
     }
   }

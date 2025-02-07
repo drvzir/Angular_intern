@@ -42,7 +42,7 @@ jobs:
           node-version: 22
 
       - name: Install Frontend Dependencies
-        run: npm install
+        run: npm install --force
         working-directory: ./angular-login
 
       - name: Run Frontend Tests

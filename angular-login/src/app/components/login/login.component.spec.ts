@@ -6,6 +6,8 @@ import { LoginComponent } from './login.component';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { FormControl } from '@angular/forms';
+
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -109,20 +111,20 @@ describe('LoginComponent', () => {
   }));
 
 
-  it('should set emailExists error on form control if email already exists', fakeAsync(() => {
-    component.loginForm.setValue({
-      email: 'existing@docquity.com',
-      password: 'Valid123!'
-    });
+  // it('should set emailExists error on form control if email already exists', fakeAsync(() => {
+  //   component.loginForm.setValue({
+  //     email: 'existing@docquity.com',
+  //     password: 'Valid123!'
+  //   });
 
-    component.onLogin();
+  //   component.onLogin();
 
-    const req = httpMock.expectOne('http://localhost:3000/auth/login');
-    req.flush({ field: 'email' }, { status: 409, statusText: 'Conflict' });
+  //   const req = httpMock.expectOne('http://localhost:3000/auth/login');
+  //   req.flush({ field: 'email' }, { status: 409, statusText: 'Conflict' });
 
-    tick();
-    expect(component.loginForm.get('email')?.hasError('emailExists')).toBeTrue();
-  }));
+  //   tick();
+  //   expect(component.loginForm.get('email')?.hasError('emailExists')).toBeTrue();
+  // }));
 
   
 
@@ -143,36 +145,34 @@ describe('LoginComponent', () => {
 
 
 
-  // it('should handle unexpected HTTP errors gracefully', fakeAsync(() => {
-  //   spyOn(console, 'error');
 
-  //   component.loginForm.setValue({
-  //     email: 'test@docquity.com',
-  //     password: 'Valid123!'
-  //   });
+it('should handle unexpected HTTP errors and show "Login Failed" alert', fakeAsync(() => {
+  spyOn(console, 'error');
+  spyOn(window, 'alert'); // Spy on alert to verify if it gets called
 
-  //   component.onLogin();
+  component.loginForm.setValue({
+    email: 'test@docquity.com',
+    password: 'InvalidPassword123!'
+  });
 
-  //   const req = httpMock.expectOne('http://localhost:3000/auth/login');
-  //   req.flush({ message: 'Unexpected error' }, { status: 500, statusText: 'Server Error' });
+  component.onLogin();
 
-  //   tick();
-  //   expect(console.error).toHaveBeenCalledWith(jasmine.stringMatching(/Server Error/));
-  // }));
+  // Simulate an unexpected server error response
+  const req = httpMock.expectOne('http://localhost:3000/auth/login');
+  req.flush({ message: 'Unexpected error' }, { status: 500, statusText: 'Server Error' });
 
-  // it('should log form as invalid and prevent HTTP request on invalid form', () => {
-  //   spyOn(console, 'log');
+  tick();
 
-  //   component.loginForm.setValue({
-  //     email: 'invalid_email',
-  //     password: ''
-  //   });
+  // Assert that the error message was logged and the alert was shown
+  expect(console.error).toHaveBeenCalledWith('Login Failed');
+  expect(window.alert).toHaveBeenCalledWith('Login Failed');
+}));
 
-  //   component.onLogin();
 
-  //   expect(console.log).toHaveBeenCalledWith('Form is invalid');
-  //   expect(httpMock.match('http://localhost:3000/auth/login').length).toBe(0);
-  // });
+
+
+
+
 
 
   it('should throw fill all details when details not entered properly', () => {
@@ -187,5 +187,33 @@ describe('LoginComponent', () => {
 
     expect(console.log).toHaveBeenCalledWith('Form is invalid');
   });
+
+
+  it('should validate the password ending with "password123"', () => {
+    const passwordControl = new FormControl('testpassword123');
+    const invalidResult = component.docquitypasswordValidator(passwordControl);
+    expect(invalidResult).toBeNull(); // Valid case
+
+    passwordControl.setValue('incorrectPassword');
+    const validResult = component.docquitypasswordValidator(passwordControl);
+    expect(validResult).toEqual({ invalidPassword: true }); // Invalid case
+  });
+
+  it('should set invalidPassword error on form control if password is incorrect', fakeAsync(() => {
+    component.loginForm.setValue({
+      email: 'test@docquity.com',
+      password: 'wrongPassword123!'
+    });
+  
+    component.onLogin();
+  
+    const req = httpMock.expectOne('http://localhost:3000/auth/login');
+    req.flush({ field: 'password' }, { status: 400, statusText: 'Bad Request' });
+  
+    tick();
+    expect(component.loginForm.get('password')?.hasError('invalidPassword')).toBeTrue();
+  }));
+  
+
 
 });

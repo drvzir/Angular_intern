@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, BadRequestException } from '@nestjs/common';
+import { ConflictException, Injectable, BadRequestException , NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
@@ -12,8 +12,7 @@ export class AuthService {
     constructor(
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
-        private jwtService : JwtService,
-    ) {}
+        private jwtService : JwtService, ) {}
 //sign up authorization ;
 
     async signup(signupDto: SignupDto): Promise<{ message: string }> {
@@ -26,6 +25,7 @@ export class AuthService {
                 message: 'Email already exists',
             });
         }
+       
 
         const usernameExists = await this.userRepository.findOne({ where: { username } });
         if (usernameExists) {
@@ -57,7 +57,7 @@ export class AuthService {
 
         const userExists = await this.userRepository.findOne({ where: { email } });
         if (!userExists) {
-            throw new ConflictException({
+            throw new NotFoundException({
                 field: 'email',
                 message: 'User does not exist',
             });
@@ -65,14 +65,14 @@ export class AuthService {
 
         const valid = await bcrypt.compare(password, userExists.password);
         if (valid === false) {
-            throw new ConflictException({
+            throw new BadRequestException({
                 field: 'password',
                 message: 'Wrong Password',
             });
         }
 
         // const payload
-        const payload = { sub: userExists.id, username: userExists.email };
+        const payload = { sub: userExists.id, username: userExists.username , email: userExists.email }; // I have changes this line
         return {
             message: "Logged in Sucssfully",
             access_token: await this.jwtService.signAsync(payload),

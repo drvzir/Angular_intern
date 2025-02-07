@@ -67,13 +67,26 @@ export class SignupComponent {
       : { invalidEmailDomain: true };
   }
  
+  // passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
+  //   const password = group.get('password')?.value;
+  //   const confirmPassword = group.get('confirmPassword')?.value;
+  //   return password === confirmPassword
+  //     ? null
+  //     : { passwordsMismatch: true };
+  // }
+
   passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('confirmPassword')?.value;
-    return password === confirmPassword
-      ? null
-      : { passwordsMismatch: true };
+    if (password !== confirmPassword) {
+      group.get('confirmPassword')?.setErrors({ passwordsMismatch: true });
+      return { passwordsMismatch: true };
+    } else {
+      group.get('confirmPassword')?.setErrors(null);
+      return null;
+    }
   }
+  
  
   onUserSave() {
     if (this.userForm.valid) {
@@ -118,7 +131,7 @@ export class SignupComponent {
             this.userForm.get('email')?.setErrors({ emailExists: true });
           }
           //server error
-          else {
+          else if (error.status === 500) {
             this.serverError = 'An unexpected error occurred. Please try again later.';
           }
         }
@@ -126,9 +139,9 @@ export class SignupComponent {
 
 
     }
-    // else {
-    //   console.log('Form is invalid');
-    // }
+    else {
+      console.log('Form is invalid');
+    }
   }
 }
  

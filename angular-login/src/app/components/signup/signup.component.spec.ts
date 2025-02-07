@@ -3,7 +3,7 @@ import { SignupComponent } from './signup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
-import { of, throwError } from 'rxjs';
+import { first, last, of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 describe('SignupComponent', () => {
@@ -59,12 +59,12 @@ describe('SignupComponent', () => {
     spyOn(httpClient, 'post').and.returnValue(of({ message: 'User registered' }));
 
     component.userForm.setValue({
-      firstName: 'John',
-      lastName: 'Doe',
-      userName: 'johndoe',
-      email: 'john@docquity.com',
-      password: 'Valid@123',
-      confirmPassword: 'Valid@123',
+      firstName: 'Dhruv',
+      lastName: 'Wazir',
+      userName: 'wazir12',
+      email: 'wazir@docquity.com',
+      password: 'Wazir@123#',
+      confirmPassword: 'Wazir@123#',
       mobile: '9876543210',
       country: '+91',
     });
@@ -79,12 +79,12 @@ describe('SignupComponent', () => {
     spyOn(httpClient, 'post').and.returnValue(throwError({ status: 409, error: { field: 'email' } }));
 
     component.userForm.setValue({
-      firstName: 'Jane',
-      lastName: 'Doe',
-      userName: 'janedoe',
-      email: 'jane@docquity.com',
-      password: 'Valid@123',
-      confirmPassword: 'Valid@123',
+      firstName: 'Dhruv',
+      lastName: 'Wazir',
+      userName: 'wazir12',
+      email: 'wazir@docquity.com',
+      password: 'Wazir@123#',
+      confirmPassword: 'Wazir@123#',
       mobile: '9876543210',
       country: '+91',
     });
@@ -97,13 +97,13 @@ describe('SignupComponent', () => {
     spyOn(httpClient, 'post').and.returnValue(throwError({ status: 500 }));
   
     component.userForm.setValue({
-      firstName: 'Test',
-      lastName: 'User',
-      userName: 'testuser',
-      email: 'testuser@docquity.com',
+      firstName: 'rohan',
+      lastName: 'verma',
+      userName: 'rohanv',
+      email: 'rohan@docquity.com',
       password: 'Valid@123',
       confirmPassword: 'Valid@123',
-      mobile: '9876543210',
+      mobile: '9876548210',
       country: '+91',
     });
   
@@ -122,13 +122,13 @@ describe('SignupComponent', () => {
     );
   
     component.userForm.setValue({
-      firstName: 'Test',
-      lastName: 'User',
-      userName: 'testuser',
-      email: 'existing@docquity.com',
+      firstName: 'rohan',
+      lastName: 'verma',
+      userName: 'rohanv',
+      email: 'rohan@docquity.com',
       password: 'Valid@123',
       confirmPassword: 'Valid@123',
-      mobile: '9876543210',
+      mobile: '9876548210',
       country: '+91',
     });
   
@@ -142,6 +142,26 @@ describe('SignupComponent', () => {
       done(); 
     });
   });
+
+  // form is invalid
+  it('should throw error if  any of the fields is empty', () => {
+      spyOn(console, 'log');
+
+      component.userForm.setValue({
+        firstName: '',
+        lastName: 'verma',
+        userName: 'rohanv',
+        email: 'testuser@docquity.com',
+        password : 'Okay@123#',
+        confirmPassword: 'Okay@123#',
+        mobile: '9876543216',
+        country: '+91',     
+      });
+      component.onUserSave();
+      expect(console.log).toHaveBeenCalledWith('Form is invalid');
+  });
+
+
   
 });
 

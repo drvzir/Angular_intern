@@ -19,14 +19,23 @@
             class="text-red-500 text-sm mt-1"
             *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.dirty"
           >
-            {{ loginForm.get('email')?.hasError('required')
+            <!-- {{ loginForm.get('email')?.hasError('required')
               ? 'Email is required.'
               : loginForm.get('email')?.hasError('email')
               ? 'Invalid email address.'
               : loginForm.get('email')?.hasError('emailExists') 
               ? 'Email not found in the database.'
-              : 'Email must end with @docquity.com.' 
-            }}
+              : '' 
+            }} -->
+            {{ loginForm.get('email')?.hasError('required')
+            ? 'Email is required.'
+            : loginForm.get('email')?.hasError('email')
+            ? 'Invalid email address.'
+            : loginForm.get('email')?.hasError('invalidEmailDomain') 
+            ? 'Email must end with @docquity.com.'
+            : loginForm.get('email')?.hasError('emailNotFound') 
+            ? 'Email does not exists.'
+            : '' }}
           </p>
         </div>
  
@@ -47,6 +56,8 @@
           >
             {{ loginForm.get('password')?.hasError('required')
               ? 'Password is required.'
+              : loginForm.get('password')?.hasError('invalidPassword')
+              ? 'Password incorrect.'
               : 'Must include uppercase, lowercase, number, special character, and min 8 chars.' }}
           </p>
         </div>

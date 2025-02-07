@@ -101,6 +101,13 @@ export class LoginComponent {
       ? null
       : { invalidEmailDomain: true };
   }
+
+  docquitypasswordValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.value;
+    return password && password.endsWith('password123')
+      ? null
+      : { invalidPassword: true };
+  }
  
   onLogin() {
     if (this.loginForm.valid) {
@@ -118,7 +125,8 @@ export class LoginComponent {
             console.log('Token Stored in the Local Storage')
           }
           console.log('Login Successful', res);
-          alert('Login Successful');
+          //alert('Login Successful');
+          
           // this.loginForm.get('email')?.setErrors(null);
           this.router.navigate(['/dashboard']).then(success => {
             if (success) {
@@ -129,17 +137,19 @@ export class LoginComponent {
           });
         },
         (error) => {
-          if (error.status === 409 && error.error.field === 'email') {
-            this.loginForm.get('email')?.setErrors({ emailExists: true });
-          }
-
-        else if(error.status === 404){
+          if(error.status === 404){
          this.loginForm.get('email')?.setErrors({ emailNotFound: true });
-         alert('Email Not Found');
+        //  alert('Email Not Found');
         }
-
+        else if(error.status === 400 && error.error.field === 'password'){
+          this.loginForm.get('password')?.setErrors({ invalidPassword: true });
+          // alert('Invalid Password');
         }
-      );
+        else{
+          console.error('Login Failed');
+          alert('Login Failed');
+        }
+      });
     } 
     else {
       console.log('Form is invalid');

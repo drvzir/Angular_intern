@@ -109,10 +109,10 @@ name: CI Pipeline for Angular & NestJS
 on:
   push:
     branches:
-      - intern_local
+      - intern_loca
   pull_request:
     branches:
-      - intern_local
+      - intern_loca
 
 jobs:
   build-and-test:
@@ -132,34 +132,34 @@ jobs:
       # 3. Install dependencies for both frontend and backend
       - name: Install Backend Dependencies
         run: |
-          cd backend
+          cd nest
           npm install
 
       - name: Install Frontend Dependencies
         run: |
-          cd frontend
+          cd angular-login
           npm install --force
 
       # 4. Run Tests for both frontend and backend
       - name: Run Backend Tests
         run: |
-          cd backend
+          cd nest
           npm run test  # Ensure you have a 'test' script in backend/package.json
 
       - name: Run Frontend Tests
         run: |
-          cd frontend
+          cd angular-login
           npm run test -- --watch=false --browsers=ChromeHeadless
 
       # 5. Build both projects
       - name: Build Backend
         run: |
-          cd backend
+          cd nest
           npm run build  # Ensure you have a 'build' script in backend/package.json
 
       - name: Build Frontend
         run: |
-          cd frontend
+          cd angular-login
           npm run build # Angular production build
 
       # 6. Optionally, you can deploy here if needed

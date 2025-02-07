@@ -1,3 +1,55 @@
+# name: CI Pipeline
+
+# on:
+#   push:
+#     branches: [intern_loca]
+#   pull_request:
+#     branches: [intern_loca]
+
+# jobs:
+#   backend:
+#     name: Backend CI
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v3
+
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+
+#       - name: Install Backend Dependencies
+#         run: npm install
+#         working-directory: ./nest
+
+#       - name: Run Backend Tests
+#         run: npm test
+#         working-directory: ./nest
+
+#   frontend:
+#     name: Frontend CI
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout Code
+#         uses: actions/checkout@v3
+
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+
+#       - name: Install Frontend Dependencies
+#         run: npm install --force
+#         working-directory: ./angular-login
+
+#       - name: Run Frontend Tests
+#         run: npm test
+#         working-directory: ./angular-login
+
+
 name: CI Pipeline
 
 on:
@@ -41,10 +93,13 @@ jobs:
         with:
           node-version: 18
 
+      - name: Install Dependencies for Headless Chrome
+        run: sudo apt-get update && sudo apt-get install -y libnss3 xvfb
+
       - name: Install Frontend Dependencies
         run: npm install --force
         working-directory: ./angular-login
 
-      - name: Run Frontend Tests
-        run: npm test
+      - name: Run Frontend Tests with Headless Chrome
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1024x768x24' npm test
         working-directory: ./angular-login

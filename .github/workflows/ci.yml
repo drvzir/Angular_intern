@@ -2,11 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches:
-         -intern_loca
+    branches: [intern_loca]
   pull_request:
-    branches: 
-         -intern_loca
+    branches: [intern_loca]
 
 jobs:
   backend:

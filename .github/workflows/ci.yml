@@ -2,9 +2,11 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [intern_loca]
+    branches:
+         -intern_loca
   pull_request:
-    branches: [intern_loca]
+    branches: 
+         -intern_loca
 
 jobs:
   backend:
@@ -22,11 +24,11 @@ jobs:
 
       - name: Install Backend Dependencies
         run: npm install
-        working-directory: nest
+        working-directory: /home/dhruv.wazir/Desktop/Final project/nest
 
       - name: Run Backend Tests
         run: npm test
-        working-directory: nest
+        working-directory: /home/dhruv.wazir/Desktop/Final project/nest
 
   frontend:
     name: Frontend CI
@@ -43,8 +45,8 @@ jobs:
 
       - name: Install Frontend Dependencies
         run: npm install
-        working-directory: angular-login
+        working-directory: /home/dhruv.wazir/Desktop/Final project/angular-login
 
       - name: Run Frontend Tests
         run: npm test
-        working-directory: angular-login
+        working-directory: /home/dhruv.wazir/Desktop/Final project/angular-login

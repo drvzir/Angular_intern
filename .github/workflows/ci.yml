@@ -1,0 +1,33 @@
+name: Node.js CI Pipeline
+
+on:
+  push:
+    branches: [intern_loca]
+  pull_request:
+    branches: [intern_loca]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        run: npm install
+
+
+      - name: Run Tests
+        run: npm test
+
+

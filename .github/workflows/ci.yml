@@ -1,4 +1,4 @@
-name: Node.js CI Pipeline
+name: CI Pipeline
 
 on:
   push:
@@ -7,12 +7,9 @@ on:
     branches: [intern_loca]
 
 jobs:
-  build-and-test:
+  backend:
+    name: Backend CI
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [22]
 
     steps:
       - name: Checkout Code
@@ -21,13 +18,33 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22
 
-      - name: Install Dependencies
+      - name: Install Backend Dependencies
         run: npm install
+        working-directory: /home/dhruv.wazir/Desktop/Final project/nest
 
-
-      - name: Run Tests
+      - name: Run Backend Tests
         run: npm test
+        working-directory: /home/dhruv.wazir/Desktop/Final project/nest
 
+  frontend:
+    name: Frontend CI
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: Install Frontend Dependencies
+        run: npm install
+        working-directory: /home/dhruv.wazir/Desktop/Final project/angular-login
+
+      - name: Run Frontend Tests
+        run: npm test
+        working-directory: /home/dhruv.wazir/Desktop/Final project/angular-login

@@ -22,11 +22,11 @@ jobs:
 
       - name: Install Backend Dependencies
         run: npm install
-        working-directory: /home/dhruv.wazir/Desktop/Final project/nest
+        working-directory: nest
 
       - name: Run Backend Tests
         run: npm test
-        working-directory: /home/dhruv.wazir/Desktop/Final project/nest
+        working-directory: nest
 
   frontend:
     name: Frontend CI
@@ -43,8 +43,8 @@ jobs:
 
       - name: Install Frontend Dependencies
         run: npm install
-        working-directory: /home/dhruv.wazir/Desktop/Final project/angular-login
+        working-directory: angular-login
 
       - name: Run Frontend Tests
         run: npm test
-        working-directory: /home/dhruv.wazir/Desktop/Final project/angular-login
+        working-directory: angular-login
